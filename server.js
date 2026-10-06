@@ -5,13 +5,17 @@ import User from './models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import auth from './middleware/auth.js';
 
 // Load environment variables
 dotenv.config();
 
 // Initialize express application
 const app = express();
-
+// Test protected route
+app.get('/api/auth', auth, (req, res) => {
+  res.json({ msg: 'This is a protected route', user: req.user });
+});
 // Connect to the database
 connectDatabase();
 
@@ -152,6 +156,9 @@ app.post('/api/auth', [
     res.status(500).send('Server error');
   }
 });
-
+// Test protected route
+app.get('/api/auth', auth, (req, res) => {
+  res.json({ msg: 'This is a protected route', user: req.user });
+});
 // Connection listener
 app.listen(3000, () => console.log(`Express server running on port 3000`));
