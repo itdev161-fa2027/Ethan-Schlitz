@@ -7,12 +7,14 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import auth from './middleware/auth.js';
+import cors from 'cors';
 
 // Load environment variables
 dotenv.config();
 
 // Initialize express application
 const app = express();
+app.use(cors());
 // Test protected route
 app.get('/api/auth', auth, (req, res) => {
   res.json({ msg: 'This is a protected route', user: req.user });
